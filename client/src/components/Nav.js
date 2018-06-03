@@ -7,35 +7,38 @@ const Nav = ({ user, loggedIn, logout, orgId }) => {
   const url = location.hash.slice(1)
   return (
     <div className="ui inverted menu">
+    <a className="item">LOGO</a>
       {
         loggedIn ?
           (
-            <ul >
+            <div className='ui inverted menu'>
               {user.userStatus === 'admin' ?
                 (
-                  <div>
-                    <li className="item">
+                  <div className='ui inverted menu'>
+                    <a className="item">
                       <Link to={`/organizations/${orgId}/users`}>Manage Users</Link>
-                    </li>
-                    <li className="item">
+                    </a>
+                    <a className="item">
                       <Link to={`/organizations/${orgId}/requests`}>Manage Requests</Link>
-                    </li>
-                    <li className="item">
+                    </a>
+                    <a className="item">
                       <Link to={`/organizations/${orgId}/customize`}>Customize My Page</Link>
-                    </li>
-                    <li className="item">
+                    </a>
+                    <a className="item">
                       <Link to={`/organizations/${orgId}/account`}>Account Detail</Link>
-                    </li>
+                    </a>
                   </div>) : null
               }
-              <li className="item">
-                <span onClick={logout}>Log out</span>
-              </li>
-            </ul>
+              <div>
+                <a className="active blue item" onClick={logout}>
+                Log out
+                </a>
+              </div>
+            </div>
           ) : (
-            <li className="item">
+            <a className="active blue item">
               <Link to='/login'>Log In</Link>
-            </li>
+            </a>
           )
       }
     </div>
