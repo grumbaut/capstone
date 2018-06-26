@@ -7,7 +7,7 @@ const DELETE_USER = 'DELETE_USER';
 
 const getUsers = users => ({ type: GET_USERS, users });
 const createUser = user => ({ type: CREATE_USER, user });
-const updateUser = user => ({ type: UPDATE_USER, user });
+export const updateUser = user => ({ type: UPDATE_USER, user });
 const deleteUser = id => ({ type: DELETE_USER, id });
 
 export const getUsersFromServer = () => {

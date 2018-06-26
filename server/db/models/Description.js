@@ -9,7 +9,10 @@ const Description = conn.define('description', {
   },
   description: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 }, {
   timestamps: false

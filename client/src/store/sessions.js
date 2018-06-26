@@ -12,8 +12,7 @@ export const attemptLogin = (credentials, history) => {
         window.localStorage.setItem('token', token);
         return token;
       })
-      .then(token => dispatch(getUserFromToken(token)))
-      .then(() => history.push('/'))
+      .then(token => dispatch(getUserFromToken(token, history)))
       .catch(err => {
         window.localStorage.removeItem('token');
         return err;
@@ -30,7 +29,7 @@ export const signup = (userInfo, history) => {
         return token;
       })
       .then(token => dispatch(getUserFromToken(token)))
-      .then(() => history.push('/'))
+      .then(() => history.push('/organizations/create'))
       .catch(err => {
         window.localStorage.removeItem('token');
         return err;
@@ -38,7 +37,7 @@ export const signup = (userInfo, history) => {
   }
 }
 
-export const getUserFromToken = token => {
+export const getUserFromToken = (token, history) => {
   return dispatch => {
     return axios.get(`/api/sessions/${token}`)
       .then(result => result.data)
@@ -46,6 +45,7 @@ export const getUserFromToken = token => {
         dispatch(gotUser(user));
         if(user.organizationId) {
           socket.emit('webAppOnline', user.organizationId);
+          history.push(`/organizations/${user.organizationId}/users`)
         }
       })
       .catch(err => {

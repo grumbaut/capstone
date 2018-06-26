@@ -39,23 +39,27 @@ const seed = () => {
       userStatus: 'user'
     }),
     User.create({
-      firstName: 'Alexander',
-      lastName: 'Levin',
-      email: 'alexanderlevin@gmail.com',
-      password: 'alexander',
+      firstName: 'A',
+      lastName: 'L',
+      email: 'al@gmail.com',
+      password: 'al',
       userStatus: 'user'
     }),
     Organization.create({
       name: 'Cliffs LIC',
       organization_type: 'Climbing Gym',
-      address: '11-11 44th Drive',
+      address: '11 44th Drive',
       city: 'Queens',
       state: 'New York',
       zip: '11101',
       contact_name: 'Mary',
       contact_phone: '718-729-7625',
-      backgroundColor: '#c5cae9',
-      textColor: '#000000'
+      backgroundColor: "#02a4ff",
+      textColor: '#fff',
+      latitude: 40.705076,
+      longitude: -74.009160,
+      image: 'https://fortunedotcom.files.wordpress.com/2015/09/bri10_a.jpg',
+      avatar: 'https://pbs.twimg.com/profile_images/3703706045/be4aed2621811421703e5467080cd24e_400x400.jpeg'
     }),
     Organization.create({
       name: 'REACTO',
@@ -67,7 +71,11 @@ const seed = () => {
       contact_name: 'Lucy',
       contact_phone: '347-834-9066',
       backgroundColor: '#33691e',
-      textColor: '#fff'
+      textColor: '#fff',
+      latitude: 40.704418,
+      longitude: -74.017902,
+      image: 'https://qph.fs.quoracdn.net/main-qimg-1ee9d253447dd94fa82cb7ef82dff787-c',
+      avatar: 'https://react-etc.net/files/2017-12/react-hexagon.png'
     }),
     Organization.create({
       name: 'Fullstack Academy',
@@ -78,9 +86,13 @@ const seed = () => {
       zip: '10004',
       contact_name: 'David',
       contact_phone: '123-456-7890',
+      latitude: 40.705726,
+      longitude: -74.017750,
+      image: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F27040978%2F151501596199%2F1%2Foriginal.jpg?h=230&w=460&auto=compress&rect=0%2C13%2C1200%2C600&s=2ee8ab448a5e62dddb9229e2b627f22b',
+      avatar: 'https://pbs.twimg.com/profile_images/694191024416112642/VtJUhbKk_400x400.png'
     }),
     Organization.create({
-      name: 'Tiger Boxing',
+      name: 'Title Boxing Club',
       organization_type: 'Boxing Gym',
       address: '383 Lafayette Street',
       city: 'New York',
@@ -88,6 +100,10 @@ const seed = () => {
       zip: '10003',
       contact_name: 'Andrew D. Hamilton',
       contact_phone: '123-456-7890',
+      latitude: 40.704362,
+      longitude: -74.010046,
+      image: 'http://vp.cdn.cityvoterinc.com/g/00-00-06-18-27-97-6182797_2942362.jpg',
+      avatar: 'https://www.titleboxing.com/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/t/b/tbcmagnet3_1.jpg',
     }),
     Organization.create({
       name: 'Acme',
@@ -97,27 +113,21 @@ const seed = () => {
       state: 'New York',
       zip: '10016',
       contact_name: 'Mat',
-      contact_phone: '212-294-1000'
+      contact_phone: '212-294-1000',
+      latitude: 40.706877,
+      longitude: -74.011265,
+      image: 'https://ksr-ugc.imgix.net/assets/016/971/196/8f871c6128dce37f044cadf6a6858f5d_original.jpg?crop=faces&w=1552&h=873&fit=crop&v=1499951444&auto=format&q=92&s=6b8ad9ccaa766e75d5bef7ebfd59c9de',
+      avatar: 'https://vignette.wikia.nocookie.net/villains/images/5/56/Comp_2.jpg/revision/latest?cb=20140318215950',
     })
   ])
   .then(([ master, admin, jeremy, anna, gabriel, alexander, cliffs, reacto, fullstack, tiger, acme]) => {
     return Promise.all([
-      UserRequest.create({
-        requesterId: gabriel.id,
-        responderId: jeremy.id,
-        organizationId: cliffs.id,
-      }),
-      OrganizationRequest.create({
-        organizationId: cliffs.id,
-        userId: gabriel.id,
-        status: 'accepted'
-      }),
       Form.create({
-        name: 'Climbing Skill Level',
+        name: 'Bouldering Skill Level',
         organizationId: cliffs.id
       }),
       Form.create({
-        name: 'Highest Rope',
+        name: 'Top-Rope Skill Level',
         organizationId: cliffs.id
       }),
       Form.create({
@@ -129,44 +139,36 @@ const seed = () => {
         organizationId: fullstack.id
       }),
       Description.create({
-        description: 'I climb V3 level bouldering and 5.9 level on top-ropes',
-        userId: gabriel.id,
-        organizationId: cliffs.id,
-        // formId: form1.id
-      }),
-      Description.create({
-        description: 'I am super cool',
-        userId: gabriel.id,
-        organizationId: cliffs.id,
-        // formId: form2.id
-      }),
-      Description.create({
         description: 'I am a junior',
         userId: anna.id,
         organizationId: fullstack.id,
-        // formId: form3.id
       }),
       Description.create({
         description: 'I am a senior',
         userId: alexander.id,
         organizationId: fullstack.id,
-        // formId: form4.id
       }),
       UserOrganization.create({
         userId: admin.id,
         organizationId: cliffs.id
       }),
-      // UserOrganization.create({
-        // userId: jeremy.id,
-        // organizationId: cliffs.id
-      // }),
       UserOrganization.create({
         userId: jeremy.id,
         organizationId: reacto.id
       }),
+      OrganizationRequest.create({
+        userId: jeremy.id,
+        organizationId: reacto.id,
+        status: 'accepted'
+      }),
       UserOrganization.create({
         userId: jeremy.id,
         organizationId: fullstack.id
+      }),
+      OrganizationRequest.create({
+        userId: jeremy.id,
+        organizationId: fullstack.id,
+        status: 'accepted'
       }),
       UserOrganization.create({
         userId: anna.id,
@@ -175,10 +177,6 @@ const seed = () => {
       UserOrganization.create({
         userId: anna.id,
         organizationId: tiger.id
-      }),
-      UserOrganization.create({
-        userId: gabriel.id,
-        organizationId: cliffs.id
       }),
       UserOrganization.create({
         userId: gabriel.id,
@@ -192,16 +190,7 @@ const seed = () => {
         userId: alexander.id,
         organizationId: acme.id
       }),
-      gabriel.setCheckedIn(cliffs),
       admin.setOrganization(cliffs),
-    ])
-  })
-  .then(([ userReq1, orgReq1, form1, form2, form3, form4, des1, des2, des3, des4, uo1, /*uo2,*/ uo3, uo4, uo5, uo6, uo7, uo8, uo9 ]) => {
-    return Promise.all([
-      form1.setDescriptions([des1]),
-      form2.setDescriptions([des2]),
-      form3.setDescriptions([des3]),
-      form4.setDescriptions([des4]),
     ])
   })
 }

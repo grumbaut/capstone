@@ -6,9 +6,17 @@ import UserForm from './UserForm';
 const UserInfo = ({ user }) => {
   if (!user) return null;
   return (
-    <div>
-      <h2>{user.fullName}'s Account</h2>
-      <UserForm user={user} />
+    <div className="org-background">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12" >
+            <div className="card mt-4 card-body">
+              <h2>{user.fullName}'s Account</h2>
+              <UserForm user={user} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

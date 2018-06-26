@@ -23,5 +23,7 @@ router.use('/userOrganizations', require('./userOrganizations'))
 router.use('/forms', require('./forms'));
 router.use('/organizationRequests', require('./organizationRequests'))
 router.use('/userRequests', require('./userRequests'))
+router.use('/conversations', require('./conversations'));
+router.use('/autoComplete', require('./autoComplete'));
 
 module.exports = router;

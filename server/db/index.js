@@ -3,6 +3,8 @@ const Organization = require('./models/Organization');
 const UserOrganization = require('./models/UserOrganization')
 const OrganizationRequest = require('./models/OrganizationRequest')
 const UserRequest = require('./models/UserRequest')
+const Message = require('./models/Message');
+const Conversation = require('./models/Conversation');
 const User = require('./models/User');
 const Form = require('./models/Form')
 const conn = require('./conn');
@@ -27,6 +29,9 @@ UserRequest.belongsTo(User, { as: 'requester' });
 UserRequest.belongsTo(User, { as: 'responder' });
 UserRequest.belongsTo(Organization);
 
+Message.belongsTo(Conversation);
+Conversation.hasMany(Message);
+
 module.exports = {
   conn,
   models: {
@@ -36,6 +41,8 @@ module.exports = {
     User,
     Form,
     OrganizationRequest,
-    UserRequest
+    UserRequest,
+    Conversation,
+    Message
   }
 };

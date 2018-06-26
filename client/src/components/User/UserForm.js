@@ -44,20 +44,20 @@ class UserForm extends React.Component {
       const { user, users } = this.props
       const { firstName, lastName, email, password } = this.state;
       const fields = {
-        firstName: 'First name',
-        lastName: 'Last name',
-        email: 'Email address',
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        email: 'Email Address',
         password: 'Password'
       }
       return (
         <div>
-          <button onClick={onSave}>Save</button>
           <div>
             {
               Object.keys(fields).map(field => (
-                <div key={field}>
+                <div key={field} className="form-group col-md-6">
                   <label>{fields[field]}</label>
                   <input
+                    className="form-control"
                     name={field}
                     onChange={onChange}
                     value={this.state[field]}
@@ -66,7 +66,9 @@ class UserForm extends React.Component {
                 </div>
               ))
             }
+          <button style={{'marginLeft':'15px'}} className="btn btn-info" onClick={onSave}>Save</button>
           </div>
+
         </div>
       )
     }

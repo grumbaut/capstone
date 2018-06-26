@@ -1,6 +1,8 @@
 const router = require('express').Router();
 module.exports = router;
 
+const { io, mobileSockets } = require('../sockets');
+
 const { UserOrganization } = require('../db').models;
 
 router.get('/', (req, res, next) => {
@@ -11,7 +13,13 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   UserOrganization.create(req.body)
-    .then(userOrganization => res.send(userOrganization))
+    .then(userOrganization => {
+      if(mobileSockets[userOrganization.userId]) {
+        const socketId = mobileSockets[userOrganization.userId].id;
+        io.to(socketId).emit('addUserOrganization', userOrganization)
+      }
+      res.send(userOrganization)
+    })
     .catch(next);
 });
 

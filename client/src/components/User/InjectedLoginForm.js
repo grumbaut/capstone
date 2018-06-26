@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { attemptLogin, signup } from '../../store'
 import { Input, Button, Progress } from 'mdbreact';
+import { ProgressBar } from 'react-bootstrap';
 import { injectStripe, CardElement } from 'react-stripe-elements';
 import axios from 'axios';
 
@@ -45,13 +46,13 @@ class InjectedLoginForm extends React.Component {
         if (value.length < 4) return 'Password must be at least 4 characters'
       },
       billingFirstName: (value) => {
-        if(!value) return 'First name is required.';
+        if (!value) return 'First name is required.';
       },
       billingLastName: value => {
-        if(!value) return 'Last name is required.';
+        if (!value) return 'Last name is required.';
       },
       payment: value => {
-        if(!value) return 'Complete payment information is required.'
+        if (!value) return 'Complete payment information is required.'
       }
     }
   }
@@ -98,18 +99,12 @@ class InjectedLoginForm extends React.Component {
   render() {
     const url = location.hash.slice(1)
     const { onChange, onSubmit } = this
-    const { user} = this.props
+    const { user } = this.props
     const { firstName, lastName, password, email, errors, billingFirstName, billingLastName } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
     return (
       <div className="login-form">
-        {
-          url === '/signup' ?
-            <h1> Sign Up to Create an Organization </h1>
-            :
-            <h1> Log In </h1>
-        }
         {
           user.id ? (
             <div>
@@ -120,113 +115,124 @@ class InjectedLoginForm extends React.Component {
           ) :
             (
               <div>
-                <h3>{url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
+                <h2>{url === '/signup' ? ('Sign up as an Admin to Create an Organization Account') : ('Log in to your account')}</h2>
                 <div>
                   {
                     url === '/signup' ? (
                       <div className="ui form error">
-                      <div className="two fields">
-                        <div className="field">
-                        <label>First Name</label>
-                          <Input
-                            name="firstName"
-                            onChange={onChange}
-                            value={firstName}
-                            type="text"
-                          />
-                          {errors.firstName && <div className="ui error message">
-                            <p>{errors.firstName}</p>
+
+                          <div className="form-row">
+                          <div className="form-group col-md-6">
+                            <label>First Name</label>
+                            <Input
+                              name="firstName"
+                              onChange={onChange}
+                              value={firstName}
+                              type="text"
+                            />
+                            {errors.firstName && <div className="ui error message">
+                              <p>{errors.firstName}</p>
+                            </div>
+                            }
                           </div>
-                          }
-                        </div>
-                        <div className="field">
-                        <label>Last Name</label>
-                          <Input
-                            name="lastName"
-                            onChange={onChange}
-                            value={lastName}
-                            type="text"
-                          />
-                          {errors.lastName && <div className="ui error message">
-                            <p>{errors.lastName}</p>
+
+                          <div className="form-group col-md-6">
+                            <label>Last Name</label>
+                            <Input
+                              name="lastName"
+                              onChange={onChange}
+                              value={lastName}
+                              type="text"
+                            />
+                            {errors.lastName && <div className="ui error message">
+                              <p>{errors.lastName}</p>
+                            </div>
+                            }
                           </div>
-                          }
                         </div>
-                      </div>
-                      <div className="two fields">
-                        <div className="field">
-                        <label>Email</label>
-                          <Input
-                            name="email"
-                            onChange={onChange}
-                            value={email}
-                            type='email'
-                          />
-                          {errors.email && <div className="ui error message">
-                            <p>{errors.email}</p>
+
+
+                        <div className="form-row">
+                          <div className="form-group col-md-6">
+                            <label>Email</label>
+                            <Input
+                              name="email"
+                              onChange={onChange}
+                              value={email}
+                              type='email'
+                            />
+                            {errors.email && <div className="ui error message">
+                              <p>{errors.email}</p>
+                            </div>
+                            }
                           </div>
-                          }
-                        </div>
-                        <div className="field">
-                        <label>Password</label>
-                          <Input
-                            name="password"
-                            onChange={onChange}
-                            value={password}
-                            type="password"
-                          />
-                          {errors.password && <div className="ui error message">
-                            <p>{errors.password}</p>
+
+                          <div className="form-group col-md-6">
+                          <div className="field">
+                            <label>Password</label>
+                            <Input
+                              name="password"
+                              onChange={onChange}
+                              value={password}
+                              type="password"
+                            />
+                            {errors.password && <div className="ui error message">
+                              <p>{errors.password}</p>
+                            </div>
+                            }
                           </div>
-                          }
-                        </div>
-                        <div className="progress-wrapper">
-                          {passwordTestStrong ? (
-                            <Progress value={100} color={"success"} />
-                          ) : (
-                              passwordTestMedium ? (
-                                <Progress value={67} color={"warning"} />
-                              ) : (
-                                  password.length > 3 ? (
-                                    <Progress value={33} color={"danger"} />
-                                  ) : (
-                                      <Progress value={0} color={"danger"} />
-                                    )
-                                ))
-                          }
-                        </div>
-                        </div>
-                        <div className="two fields">
-                        <div className="field">
-                        <label>Billing First Name</label>
-                          <Input
-                            name="billingFirstName"
-                            onChange={onChange}
-                            value={billingFirstName}
-                            type="text"
-                          />
-                          {errors.billingFirstName && <div className="ui error message">
-                            <p>{errors.billingFirstName}</p>
+                          <div className="progress-wrapper">
+                            {passwordTestStrong ? (
+                              <Progress value={100} color={"success"} />
+
+                            ) : (
+                                passwordTestMedium ? (
+                                  <Progress value={67} color={"warning"} />
+                                ) : (
+                                    password.length > 3 ? (
+                                      <Progress value={33} color={"danger"} />
+                                    ) : (
+                                        <Progress value={0} color={"danger"} />
+                                      )
+                                  ))
+                            }
                           </div>
-                          }
-                        </div>
-                        <div className="field">
-                        <label>Billing Last Name</label>
-                          <Input
-                            name="billingLastName"
-                            onChange={onChange}
-                            value={billingLastName}
-                            type="text"
-                          />
-                          {errors.billingLastName && <div className="ui error message">
-                            <p>{errors.billingLastName}</p>
                           </div>
-                          }
+
                         </div>
+
+
+                        <div className="form-row">
+                          <div className="form-group col-md-6">
+                            <label>Billing First Name</label>
+                            <Input
+                              name="billingFirstName"
+                              onChange={onChange}
+                              value={billingFirstName}
+                              type="text"
+                            />
+                            {errors.billingFirstName && <div className="ui error message">
+                              <p>{errors.billingFirstName}</p>
+                            </div>
+                            }
+                          </div>
+                          <div className="form-group col-md-6">
+                            <label>Billing Last Name</label>
+                            <Input
+                              name="billingLastName"
+                              onChange={onChange}
+                              value={billingLastName}
+                              type="text"
+                            />
+                            {errors.billingLastName && <div className="ui error message">
+                              <p>{errors.billingLastName}</p>
+                            </div>
+                            }
+                          </div>
                         </div>
-                        <div className="ui divider"></div>
+                        <div style={{ 'marginTop': '20px' }}></div>
                         <div className='form-group'>
-                          <CardElement onChange={ this.handlePaymentChange } />
+                          <CardElement onChange={this.handlePaymentChange} />
                         </div>
                         <div className="ui divider"></div>
                       </div>
@@ -234,7 +240,7 @@ class InjectedLoginForm extends React.Component {
                         <div className="ui form">
                           {/* <label className="font-weight-bold">Email</label> */}
                           <div className="field">
-                          <label>Email</label>
+                            <label>Email</label>
                             <Input
                               name="email"
                               onChange={onChange}
@@ -248,21 +254,22 @@ class InjectedLoginForm extends React.Component {
                           </div>
                           {/*  <label className="font-weight-bold">Password</label> */}
                           <div className="field">
-                          <label>Password</label>
-                          <Input
-                            name="password"
-                            onChange={onChange}
-                            value={password}
-                            type="password"
-                          />
+                            <label>Password</label>
+                            <Input
+                              name="password"
+                              onChange={onChange}
+                              value={password}
+                              type="password"
+                            />
                           </div>
                         </div>
                       )
                   }
                 </div>
-                <button onClick={onSubmit} className="ui primary button">
+                <button onClick={onSubmit} className="btn btn-info" style={{ 'marginTop': '20px' }}>
                   {url === '/signup' ? ('Create account') : ('Log in')}
                 </button>
+                <div style={{ 'marginTop': '20px' }}></div>
                 {url === '/signup' ?
                   <p className="margin-t-15">Have an Account? <a href='#/login'>Log in Now &raquo;</a></p>
                   :

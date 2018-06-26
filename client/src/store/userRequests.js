@@ -4,7 +4,7 @@ const GET_USER_REQUESTS = 'GET_USER_REQUESTS';
 const DELETE_USER_REQUEST = 'DELETE_USER_REQUEST';
 
 const getUserRequests = (userRequests) => ({ type: GET_USER_REQUESTS, userRequests });
-const deleteUserRequest = (id) => ({ type: DELETE_USER_REQUEST, id });
+export const deleteUserRequest = (id) => ({ type: DELETE_USER_REQUEST, id });
 
 export const getUserRequestsFromServer = () => {
   return dispatch => {

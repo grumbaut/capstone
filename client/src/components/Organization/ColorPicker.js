@@ -21,9 +21,9 @@ class ColorPicker extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { createOrUpdateOrganization, organization } = this.props;
-    const { id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor } = organization;
+    const { id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor, latitude, longitude } = organization;
     const { backgroundColor } = this.state;
-    createOrUpdateOrganization({ id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor, backgroundColor });
+    createOrUpdateOrganization({ id, name, organization_type, address, city, state, zip, contact_name, contact_phone, image, textColor, backgroundColor, latitude, longitude });
   }
 
   render() {
@@ -33,12 +33,12 @@ class ColorPicker extends Component {
     return (
       <div>
         <SwatchesPicker
-        name='backgroundColor' value={backgroundColor}
-        onChangeComplete={this.handleColorChange}
+          name='backgroundColor' value={backgroundColor}
+          onChangeComplete={this.handleColorChange}
         />
         <br />
         <div>
-          <button className="ui button" onClick={onSave} style={{ background: backgroundColor, color: organization.textColor }}>
+          <button className="btn" onClick={onSave} style={{ background: backgroundColor, color: organization.textColor }}>
             Save Background Color
           </button>
         </div>

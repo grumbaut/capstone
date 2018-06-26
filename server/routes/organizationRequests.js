@@ -13,8 +13,10 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   OrganizationRequest.create(req.body)
     .then(organizationRequest => {
-      const socketId = webAppSockets[organizationRequest.organizationId];
-      io.to(socketId).emit('newOrganizationRequest', organizationRequest);
+      if(webAppSockets[organizationRequest.organizationId]) {
+        const socketId = webAppSockets[organizationRequest.organizationId].id;
+        io.to(socketId).emit('newOrganizationRequest', organizationRequest);
+      }
       res.send(organizationRequest);
     })
     .catch(next);
@@ -27,8 +29,10 @@ router.put('/:id', (req, res, next) => {
       return organizationRequest.save()
     })
     .then(organizationRequest => {
-      const socketId = mobileSockets[organizationRequest.userId];
-      io.to(socketId).emit('updatedOrganizationRequest', organizationRequest);
+      if(mobileSockets[organizationRequest.userId]) {
+        const socketId = mobileSockets[organizationRequest.userId].id;
+        io.to(socketId).emit('updatedOrganizationRequest', organizationRequest);
+      }
       res.send(organizationRequest)
     })
     .catch(next);

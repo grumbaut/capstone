@@ -9,10 +9,10 @@ let mobileSockets = {};
 
 io.on('connection', socket => {
   socket.on('mobileOnline', userId => {
-    mobileSockets[userId] = socket.id;
+    mobileSockets[userId] = socket;
   });
   socket.on('webAppOnline', userId => {
-    webAppSockets[userId] = socket.id;
+    webAppSockets[userId] = socket;
   });
 });
 
